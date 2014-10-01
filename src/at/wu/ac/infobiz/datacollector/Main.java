@@ -31,6 +31,9 @@ public class Main {
 	
 	public static final String SOURCE_STRING = "sourceFile";
 	
+	
+	
+	
 	public static Map<String,String> keyMappings = new HashMap<>();
 	static {
 		keyMappings.put("tag_date", "0_Datum");
@@ -50,6 +53,12 @@ public class Main {
 //		317	Etikettendruck durch HH
 //		318	Etikettendruck aus WWS
 //		701	Etikettenanforderung
+//		601 Avise		
+		
+//		deduced:
+//		360 Kasse
+//		350 Warenausgang EAS
+
 		Map<String, String> mappings = new HashMap<>();
 		mappings.put("201", "WE Motex");
 		mappings.put("425", "Umlagerung zwischen 01 und 02");
@@ -58,6 +67,10 @@ public class Main {
 		mappings.put("317", "Etikettendruck durch HH");
 		mappings.put("318", "Etikettendruck aus WWS");
 		mappings.put("701", "Etikettenanforderung");
+		
+		mappings.put("360", "Kasse");
+		mappings.put("350", "Warenausgang EAS");
+		mappings.put("601", "Avise");
 		valueMappings.put("bu_art", mappings);
 	}
 	
@@ -119,7 +132,7 @@ public class Main {
 			}
 		}
 		
-		// Todo output everything again:
+		// output everything again:
 		File outfile = new File("out/merge"+System.currentTimeMillis()+".csv");
 		outfile.createNewFile();
 		
@@ -145,35 +158,6 @@ public class Main {
 			System.out.print(fileName);
 			System.out.print(sep);
 		}
-		System.out.println();
-		
-		// print EPCs, which appear in buchungen and in either of the other files!
-		List<String> sharedEpcs = new LinkedList<>();
-		List<String> epcsWithMoreThanOneAvis = new LinkedList<>();
-		
-		for (String key : occurrences.keySet()){
-			if (occurrences.get(key).containsKey(fileNames.get(1))){
-				if (occurrences.get(key).containsKey(fileNames.get(0)) || occurrences.get(key).containsKey(fileNames.get(2))){
-					sharedEpcs.add(key);
-				}
-			}
-			if (occurrences.get(key).containsKey(fileNames.get(0)) && occurrences.get(key).get(fileNames.get(0)) > 1){
-				epcsWithMoreThanOneAvis.add(key);
-			}
-			for (String fileName : fileNames){
-				Integer occurred = occurrences.get(key).containsKey(fileName)?occurrences.get(key).get(fileName):0;
-				System.out.print(occurred + sep);
-			}
-			System.out.println();
-		}
-		// shared EPCs:
-		System.out.println("\nShared EPCs:");
-		System.out.println(ArrayUtils.toString(sharedEpcs.toArray()));
-	
-		// EPCs with more than one avis
-		System.out.println("\nEPCs with more than one entry in Avis:");
-		System.out.println(ArrayUtils.toString(epcsWithMoreThanOneAvis.toArray()));
-		
 	}
 	
 	

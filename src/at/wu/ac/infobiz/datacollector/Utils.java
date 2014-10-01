@@ -44,7 +44,7 @@ public class Utils {
 		String bestSep = null;
 		
 		for (int i = 0; i < DELIMITERS.length; i++){
-			String sep = DELIMITERS[delimiter];
+			String sep = DELIMITERS[i];
 			String[] parts = header.split(sep);
 			if (parts.length > maxParts){
 				maxParts = parts.length;
