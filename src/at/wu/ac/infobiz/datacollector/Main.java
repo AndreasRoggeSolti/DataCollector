@@ -31,9 +31,6 @@ public class Main {
 	
 	public static final String SOURCE_STRING = "sourceFile";
 	
-	
-	
-	
 	public static Map<String,String> keyMappings = new HashMap<>();
 	static {
 		keyMappings.put("tag_date", "0_Datum");
